@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <title>Configuración del Sistema</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        #sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            background-color: #f0f2f5;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        #sidebar .back-to-dashboard {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #6c757d;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 1rem;
+        }
+        #sidebar .back-to-dashboard:hover {
+            color: #000;
+            text-decoration: none;
+            background-color: #e9ecef;
+        }
+        #sidebar .period-active {
+            display: none;
+        }
+        #sidebar .app-logo {
+            max-width: 120px;
+            display: block;
+            margin: 0 auto 1.5rem;
+        }
+        #sidebar .module-title {
+            padding: 0.5rem 1.5rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        #sidebar .list-group {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: 1rem;
+        }
+        #sidebar .list-group-item {
+            border: none;
+            padding: 0.7rem 1.5rem;
+            color: #343a40;
+            border-left: 3px solid transparent;
+        }
+        #sidebar .list-group-item.active {
+            background-color: #fff;
+            color: #0d6efd;
+            font-weight: bold;
+            border-left-color: #0d6efd;
+        }
+        #sidebar .list-group-item:hover:not(.active) {
+            background-color: #e9ecef;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .navbar {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: calc(100% - 250px);
+            margin-left: 250px;
+            z-index: 999;
+            background: white;
+        }
+        .content-wrapper {
+            padding-top: 80px;
+        }
+        .config-section {
+            margin-bottom: 30px;
+        }
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .config-table th, .config-table td {
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        .config-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div>
+            <a href="dashboard.html" class="back-to-dashboard">
+                <i class="bi bi-arrow-left me-2"></i>Volver al Dashboard
+            </a>
+        </div>
+
+        <div class="period-active">
+            <h6 class="period-title-text mb-0">Enero - Abril 2024</h6>
+        </div>
+
+        <div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Logo-utez.png"
+                 alt="Logo UTEZ"
+                 class="app-logo">
+        </div>
+
+        <div class="module-title">
+            Menú Principal
+        </div>
+        <div class="list-group">
+            <a href="dashboard.html" class="list-group-item list-group-item-action">
+                <i class="bi bi-calendar-range me-2"></i>Periodos
+            </a>
+            <a href="gestion-puntos-evaluacion.html" class="list-group-item list-group-item-action">
+                <i class="bi bi-clipboard-data me-2"></i>Puntos de Evaluación
+            </a>
+            <a href="docentes-listado.html" class="list-group-item list-group-item-action">
+                <i class="bi bi-people me-2"></i>Docentes
+            </a>
+            <a href="configuracion.html" class="list-group-item list-group-item-action active">
+                <i class="bi bi-gear me-2"></i>Configuración
+            </a>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand navbar-light">
+        <div class="container-fluid">
+            <span class="navbar-brand fw-bold">Sistema de Evaluación Docente</span>
+            <div class="d-flex align-items-center ms-auto">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle me-2"></i>Perfil Usuario
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="index.html"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="mb-4">
+                    <h2>Configuración del Sistema</h2>
+                    <p class="text-muted">Ajustes generales y configuración global del sistema de evaluación docente.</p>
+                </div>
+
+                <!-- Sección de Configuración General -->
+                <section class="config-section card shadow p-3">
+                    <div class="card-header bg-light">
+                        <h5>Configuración General</h5>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="nombreSistema" class="form-label">Nombre del Sistema</label>
+                                <input type="text" class="form-control" id="nombreSistema" value="Sistema de Evaluación Docente UTEZ" disabled>
+                                <small class="text-muted">Este valor es informativo y no se puede modificar.</small>
+                            </div>
+                            <!-- Aquí podrías agregar más configuraciones generales en el futuro -->
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Sección de Configuración Global de Puntos de Evaluación -->
+                <section class="config-section card shadow p-3">
+                    <div class="card-header bg-light">
+                        <h5>Configuración Global de Puntos de Evaluación</h5>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <p>Habilite o deshabilite los puntos de evaluación globalmente para cada tipo de docente:</p>
+                            <div class="table-responsive">
+                                <table class="config-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Punto de Evaluación</th>
+                                            <th>Docente Tiempo Completo</th>
+                                            <th>Docente Asignatura</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>1. Presencia ante Grupo</th>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto1-tc" checked></div></td>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto1-as" checked></div></td>
+                                        </tr>
+                                        <tr>
+                                            <th>2. Tutorías</th>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto2-tc" checked></div></td>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto2-as" checked></div></td>
+                                        </tr>
+                                        <tr>
+                                            <th>3. Asesorías Académicas</th>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto3-tc" checked></div></td>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto3-as" checked></div></td>
+                                        </tr>
+                                        <tr>
+                                            <th>4. Servicio Social</th>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto4-tc" checked></div></td>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto4-as" checked></div></td>
+                                        </tr>
+                                        <tr>
+                                            <th>5. Actividades de Capacitación</th>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto5-tc" checked></div></td>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto5-as" checked></div></td>
+                                        </tr>
+                                        <tr>
+                                            <th>6. Organización de actividades de capacitación</th>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto6-tc" checked></div></td>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto6-as" checked></div></td>
+                                        </tr>
+                                        <tr>
+                                            <th>7. Supervisión de estadías en empresas</th>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto7-tc" checked></div></td>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto7-as" checked></div></td>
+                                        </tr>
+                                        <tr>
+                                            <th>8. Trabajos en cuerpos académicos</th>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto8-tc" checked></div></td>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto8-as" checked></div></td>
+                                        </tr>
+                                        <tr>
+                                            <th>9. Diseño/actualización de planes de estudio</th>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto9-tc" checked></div></td>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto9-as" checked></div></td>
+                                        </tr>
+                                        <tr>
+                                            <th>10. Cursos de educación continua</th>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto10-tc" checked></div></td>
+                                            <td><div class="form-check"><input class="form-check-input" type="checkbox" id="punto10-as" checked></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mt-3">Guardar Configuración</button>
+                        </form>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript para el estado activo del sidebar
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarLinks = document.querySelectorAll('#sidebar .list-group-item');
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

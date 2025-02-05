@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <title>Evaluaciones del Periodo</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        #sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            background-color: #f0f2f5;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        #sidebar .back-to-dashboard {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #6c757d;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 1rem;
+        }
+        #sidebar .back-to-dashboard:hover {
+            color: #000;
+            text-decoration: none;
+            background-color: #e9ecef;
+        }
+        #sidebar .period-active {
+            display: none;
+        }
+        #sidebar .app-logo {
+            max-width: 120px;
+            display: block;
+            margin: 0 auto 1.5rem;
+        }
+        #sidebar .module-title {
+            padding: 0 1.5rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        #sidebar .list-group {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: 1rem;
+        }
+        #sidebar .list-group-item {
+            border: none;
+            padding: 0.7rem 1.5rem;
+            color: #343a40;
+            border-left: 3px solid transparent;
+        }
+        #sidebar .list-group-item.active {
+            background-color: #fff;
+            color: #0d6efd;
+            font-weight: bold;
+            border-left-color: #0d6efd;
+        }
+        #sidebar .list-group-item:hover:not(.active) {
+            background-color: #e9ecef;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .navbar {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: calc(100% - 250px);
+            margin-left: 250px;
+            z-index: 999;
+            background: white;
+        }
+        .content-wrapper {
+            padding-top: 80px;
+        }
+        .evaluation-point-section {
+            margin-bottom: 30px;
+        }
+        .chart-container-small {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: 300px; /* Altura reducida para las gráficas pequeñas */
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div>
+            <a href="dashboard.html" class="back-to-dashboard">
+                <i class="bi bi-arrow-left me-2"></i>Volver al Dashboard
+            </a>
+        </div>
+
+        <div class="period-active">
+            <h6 class="period-title-text mb-0">Enero - Abril 2024</h6>
+        </div>
+
+
+        <div class="points-title">
+            Puntos de evaluación:
+        </div>
+        <div class="list-group">
+            <a href="#punto-1" class="list-group-item list-group-item-action active">
+                1. Presencia ante Grupo
+            </a>
+            <a href="#punto-2" class="list-group-item list-group-item-action">
+                2. Tutorías
+            </a>
+            <a href="#punto-3" class="list-group-item list-group-item-action">
+                3. Asesorías Académicas
+            </a>
+            <a href="#punto-4" class="list-group-item list-group-item-action">
+                4. Servicio Social
+            </a>
+            <a href="#punto-5" class="list-group-item list-group-item-action">
+                5. Actividades de Capacitación
+            </a>
+            <a href="#punto-6" class="list-group-item list-group-item-action">
+                6. Organización de actividades de capacitación
+            </a>
+            <a href="#punto-7" class="list-group-item list-group-item-action">
+                7. Estadías
+            </a>
+            <a href="#punto-8" class="list-group-item list-group-item-action">
+                8. Cuerpos académicos
+            </a>
+            <a href="#punto-9" class="list-group-item list-group-item-action">
+                9. Planes Estudio
+            </a>
+            <a href="#punto-10" class="list-group-item list-group-item-action">
+                10. Educación Continua
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand navbar-light">
+        <div class="container-fluid">
+            <span class="navbar-brand fw-bold">Sistema de Evaluación Docente</span>
+            <div class="d-flex align-items-center ms-auto">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle me-2"></i>Perfil Usuario
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="index.html"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="mb-4">
+                    <h2>Evaluaciones del Periodo: Enero - Abril 2024</h2>
+                    <p class="text-muted">Visualización detallada de las evaluaciones por punto.</p>
+                </div>
+
+                <!-- Punto de Evaluación 1: Presencia ante Grupo -->
+                <section id="punto-1" class="evaluation-point-section card shadow p-3">
+                    <div class="card-header bg-light">
+                        <h5>1. Presencia ante Grupo</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="chart-container-small">
+                                    <h6>Promedio por División Académica</h6>
+                                    <canvas id="chart-punto-1-divisiones"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="chart-container-small">
+                                    <h6>Promedio por Tipo de Docente</h6>
+                                    <canvas id="chart-punto-1-tipos"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control search-input" data-table="table-punto-1" placeholder="Buscar docente...">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select filter-type" data-table="table-punto-1">
+                                    <option value="">Todos los tipos</option>
+                                    <option value="Tiempo Completo">Tiempo Completo</option>
+                                    <option value="Asignatura">Asignatura</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select filter-department" data-table="table-punto-1">
+                                    <option value="">Todas las carreras</option>
+                                    <option value="DATID">DATID</option>
+                                    <option value="DAMI">DAMI</option>
+                                    <option value="DACEA">DACEA</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover table-punto-1">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre Completo</th>
+                                        <th>Tipo de Profesor</th>
+                                        <th>Carrera</th>
+                                        <th>Calificación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Dr. Juan Pérez</td>
+                                        <td>Tiempo Completo</td>
+                                        <td>DATID</td>
+                                        <td>9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mtra. Ana Gómez</td>
+                                        <td>Asignatura</td>
+                                        <td>DAMI</td>
+                                        <td>8</td>
+                                    </tr>
+                                    <!-- ... Más docentes para el punto 1 ... -->
+                                    <tr>
+                                        <td>Ing. Carlos López</td>
+                                        <td>Tiempo Completo</td>
+                                        <td>DACEA</td>
+                                        <td>7</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Punto de Evaluación 2: Tutorías -->
+                <section id="punto-2" class="evaluation-point-section card shadow p-3">
+                    <div class="card-header bg-light">
+                        <h5>2. Tutorías</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="chart-container-small">
+                                    <h6>Promedio por División Académica</h6>
+                                    <canvas id="chart-punto-2-divisiones"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="chart-container-small">
+                                    <h6>Promedio por Tipo de Docente</h6>
+                                    <canvas id="chart-punto-2-tipos"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control search-input" data-table="table-punto-2" placeholder="Buscar docente...">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select filter-type" data-table="table-punto-2">
+                                    <option value="">Todos los tipos</option>
+                                    <option value="Tiempo Completo">Tiempo Completo</option>
+                                    <option value="Asignatura">Asignatura</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select filter-department" data-table="table-punto-2">
+                                    <option value="">Todas las carreras</option>
+                                    <option value="DATID">DATID</option>
+                                    <option value="DAMI">DAMI</option>
+                                    <option value="DACEA">DACEA</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover table-punto-2">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre Completo</th>
+                                        <th>Tipo de Profesor</th>
+                                        <th>Carrera</th>
+                                        <th>Calificación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Dr. Juan Pérez</td>
+                                        <td>Tiempo Completo</td>
+                                        <td>DATID</td>
+                                        <td>8</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mtra. Ana Gómez</td>
+                                        <td>Asignatura</td>
+                                        <td>DAMI</td>
+                                        <td>9</td>
+                                    </tr>
+                                    <!-- ... Más docentes para el punto 2 ... -->
+                                    <tr>
+                                        <td>Ing. Carlos López</td>
+                                        <td>Tiempo Completo</td>
+                                        <td>DACEA</td>
+                                        <td>10</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Repetir secciones para los 10 puntos de evaluación -->
+                <!-- ... (Puntos 3 al 10, cambiando el título y el data-table, y el ID de la sección) ... -->
+
+                <section id="punto-10" class="evaluation-point-section card shadow p-3">
+                    <div class="card-header bg-light">
+                        <h5>10. Cursos de educación continua</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="chart-container-small">
+                                    <h6>Promedio por División Académica</h6>
+                                    <canvas id="chart-punto-10-divisiones"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="chart-container-small">
+                                    <h6>Promedio por Tipo de Docente</h6>
+                                    <canvas id="chart-punto-10-tipos"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control search-input" data-table="table-punto-10" placeholder="Buscar docente...">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select filter-type" data-table="table-punto-10">
+                                    <option value="">Todos los tipos</option>
+                                    <option value="Tiempo Completo">Tiempo Completo</option>
+                                    <option value="Asignatura">Asignatura</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select filter-department" data-table="table-punto-10">
+                                    <option value="">Todas las carreras</option>
+                                    <option value="DATID">DATID</option>
+                                    <option value="DAMI">DAMI</option>
+                                    <option value="DACEA">DACEA</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover table-punto-10">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre Completo</th>
+                                        <th>Tipo de Profesor</th>
+                                        <th>Carrera</th>
+                                        <th>Calificación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Dr. Juan Pérez</td>
+                                        <td>Tiempo Completo</td>
+                                        <td>DATID</td>
+                                        <td>7</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mtra. Ana Gómez</td>
+                                        <td>Asignatura</td>
+                                        <td>DAMI</td>
+                                        <td>8</td>
+                                    </tr>
+                                    <!-- ... Más docentes para el punto 10 ... -->
+                                    <tr>
+                                        <td>Ing. Carlos López</td>
+                                        <td>Tiempo Completo</td>
+                                        <td>DACEA</td>
+                                        <td>9</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInputs = document.querySelectorAll('.search-input');
+            const typeFilters = document.querySelectorAll('.filter-type');
+            const departmentFilters = document.querySelectorAll('.filter-department');
+            const pointLinks = document.querySelectorAll('#sidebar .list-group-item');
+
+            searchInputs.forEach(input => {
+                input.addEventListener('input', handleSearch);
+            });
+
+            typeFilters.forEach(filter => {
+                filter.addEventListener('change', handleFilterType);
+            });
+
+            departmentFilters.forEach(filter => {
+                filter.addEventListener('change', handleFilterDepartment);
+            });
+
+            pointLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    pointLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            function handleSearch(event) {
+                const searchTerm = event.target.value.toLowerCase();
+                const tableClass = event.target.dataset.table;
+                const tableBody = document.querySelector(`.${tableClass} tbody`);
+                const rows = tableBody.querySelectorAll('tr');
+
+                rows.forEach(row => {
+                    const nameCell = row.cells[0];
+                    const name = nameCell.textContent.toLowerCase();
+                    if (name.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                applyFilters(tableClass);
+            }
+
+            function handleFilterType(event) {
+                const filterValue = event.target.value;
+                const tableClass = event.target.dataset.table;
+                applyFilters(tableClass, filterValue, null);
+            }
+
+            function handleFilterDepartment(event) {
+                const filterValue = event.target.value;
+                const tableClass = event.target.dataset.table;
+                applyFilters(tableClass, null, filterValue);
+            }
+
+            function applyFilters(tableClass, typeFilterValue = null, departmentFilterValue = null) {
+                const tableBody = document.querySelector(`.${tableClass} tbody`);
+                const rows = tableBody.querySelectorAll('tr');
+                const currentSearchTerm = document.querySelector(`.search-input[data-table="${tableClass}"]`).value.toLowerCase();
+                const currentTypeFilterValue = typeFilterValue || document.querySelector(`.filter-type[data-table="${tableClass}"]`).value;
+                const currentDepartmentFilterValue = departmentFilterValue || document.querySelector(`.filter-department[data-table="${tableClass}"]`).value;
+
+                rows.forEach(row => {
+                    const nameCell = row.cells[0].textContent.toLowerCase();
+                    const typeCell = row.cells[1].textContent;
+                    const departmentCell = row.cells[2].textContent;
+
+                    const nameMatch = nameCell.includes(currentSearchTerm);
+                    const typeMatch = currentTypeFilterValue ? typeCell === currentTypeFilterValue : true;
+                    const departmentMatch = currentDepartmentFilterValue ? departmentCell === departmentFilterValue : true;
+
+                    if (nameMatch && typeMatch && departmentMatch) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            // Datos de ejemplo para las gráficas (¡Reemplazar con datos reales!)
+            const evaluacionesData = {
+                'punto-1': {
+                    divisiones: { DATID: 8.2, DAMI: 7.8, DACEA: 8.5 },
+                    tipos: { 'Tiempo Completo': 8.1, Asignatura: 8.0 }
+                },
+                'punto-2': {
+                    divisiones: { DATID: 7.5, DAMI: 8.0, DACEA: 7.2 },
+                    tipos: { 'Tiempo Completo': 7.6, Asignatura: 7.4 }
+                },
+                'punto-10': {
+                    divisiones: { DATID: 8.8, DAMI: 8.5, DACEA: 9.0 },
+                    tipos: { 'Tiempo Completo': 8.7, Asignatura: 8.6 }
+                }
+                // ... Datos para los 10 puntos ...
+            };
+
+            // Función para crear gráfica de barras horizontal
+            function crearGraficaBarrasHorizontal(canvasId, labels, data, labelDataset, color) {
+                new Chart(document.getElementById(canvasId), {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: labelDataset,
+                            data: data,
+                            backgroundColor: color,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                max: 10,
+                                title: {
+                                    display: true,
+                                    text: 'Puntuación Promedio (0-10)'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    autoSkip: false,
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false // Ocultar leyenda
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Crear gráficas para el Punto 1
+            crearGraficaBarrasHorizontal(
+                'chart-punto-1-divisiones',
+                Object.keys(evaluacionesData['punto-1'].divisiones),
+                Object.values(evaluacionesData['punto-1'].divisiones),
+                'Promedio',
+                '#28a745' // Verde
+            );
+            crearGraficaBarrasHorizontal(
+                'chart-punto-1-tipos',
+                Object.keys(evaluacionesData['punto-1'].tipos),
+                Object.values(evaluacionesData['punto-1'].tipos),
+                'Promedio',
+                '#007bff' // Azul
+            );
+
+             // Crear gráficas para el Punto 2
+             crearGraficaBarrasHorizontal(
+                'chart-punto-2-divisiones',
+                Object.keys(evaluacionesData['punto-2'].divisiones),
+                Object.values(evaluacionesData['punto-2'].divisiones),
+                'Promedio',
+                '#28a745' // Verde
+            );
+            crearGraficaBarrasHorizontal(
+                'chart-punto-2-tipos',
+                Object.keys(evaluacionesData['punto-2'].tipos),
+                Object.values(evaluacionesData['punto-2'].tipos),
+                'Promedio',
+                '#007bff' // Azul
+            );
+
+            // Crear gráficas para el Punto 10
+            crearGraficaBarrasHorizontal(
+                'chart-punto-10-divisiones',
+                Object.keys(evaluacionesData['punto-10'].divisiones),
+                Object.values(evaluacionesData['punto-10'].divisiones),
+                'Promedio',
+                '#28a745' // Verde
+            );
+            crearGraficaBarrasHorizontal(
+                'chart-punto-10-tipos',
+                Object.keys(evaluacionesData['punto-10'].tipos),
+                Object.values(evaluacionesData['punto-10'].tipos),
+                'Promedio',
+                '#007bff' // Azul
+            );
+
+            // ... (Repetir para los 10 puntos) ...
+
+        });
+    </script>
+</body>
+</html>

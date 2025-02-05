@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f2f5; /* Fondo gris claro consistente */
+            min-height: 100vh;
+            display: flex; /* Centrar verticalmente el contenido */
+            align-items: center;
+        }
+        .login-card {
+            max-width: 400px;
+            border-radius: 10px; /* BorderRadius consistente con el dashboard */
+            box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075); /* Sombra consistente */
+            border: none; /* Eliminar borde de la tarjeta para un diseño más limpio */
+        }
+        .card-body {
+            padding: 2rem; /* Aumentar el padding interno de la tarjeta */
+        }
+        .app-logo {
+            max-width: 150px;
+            margin: 0 auto 1.5rem;
+            display: block; /* Asegurar que el logo sea un bloque para centrarlo */
+        }
+        .login-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #343a40; /* Color de texto un poco más oscuro y consistente */
+        }
+        .form-control-lg {
+            border-radius: 0.5rem; /* Bordes más redondeados para los inputs */
+        }
+        .btn-primary {
+            border-radius: 0.5rem; /* Bordes redondeados para el botón primario */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card login-card shadow">
+                    <div class="card-body">
+                        <!-- Logo UTEZ -->
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Logo-utez.png"
+                             alt="Logo UTEZ"
+                             class="app-logo">
+
+                        <h2 class="login-title">Inicio de Sesión</h2>
+
+                        <!-- Formulario -->
+                        <form>
+                            <!-- Campo Usuario -->
+                            <div class="mb-3">
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       placeholder="Usuario"
+                                       required>
+                            </div>
+
+                            <!-- Campo Contraseña -->
+                            <div class="mb-4">
+                                <input type="password"
+                                       class="form-control form-control-lg"
+                                       placeholder="Contraseña"
+                                       required>
+                            </div>
+
+                            <!-- Botón de Inicio -->
+                           <a href="dashboard.html" class="btn btn-primary btn-lg w-100">Iniciar Sesión</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

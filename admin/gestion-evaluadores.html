@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <title>Gestión de Evaluadores - Presencia ante Grupo</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        #sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            background-color: #f0f2f5;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        #sidebar .back-to-dashboard {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #6c757d;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 1rem;
+        }
+        #sidebar .back-to-dashboard:hover {
+            color: #000;
+            text-decoration: none;
+            background-color: #e9ecef;
+        }
+        #sidebar .period-active {
+            display: none;
+        }
+        #sidebar .app-logo {
+            max-width: 120px;
+            display: block;
+            margin: 0 auto 1.5rem;
+        }
+        #sidebar .module-title {
+            padding: 0 1.5rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        #sidebar .list-group {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: 1rem;
+        }
+        #sidebar .list-group-item {
+            border: none;
+            padding: 0.7rem 1.5rem;
+            color: #343a40;
+            border-left: 3px solid transparent;
+        }
+        #sidebar .list-group-item.active {
+            background-color: #fff;
+            color: #0d6efd;
+            font-weight: bold;
+            border-left-color: #0d6efd;
+        }
+        #sidebar .list-group-item:hover:not(.active) {
+            background-color: #e9ecef;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .navbar {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: calc(100% - 250px);
+            margin-left: 250px;
+            z-index: 999;
+            background: white;
+        }
+        .content-wrapper {
+            padding-top: 80px;
+        }
+        .status-badge {
+            font-size: 0.8rem;
+            padding: 0.35rem 0.7rem;
+        }
+        .form-check-input-switch {
+            margin-left: 0;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div>
+            <a href="dashboard.html" class="back-to-dashboard">
+                <i class="bi bi-arrow-left me-2"></i>Volver al Dashboard
+            </a>
+        </div>
+
+        <div class="period-active">
+            <h6 class="period-title-text mb-0">Enero - Abril 2024</h6>
+        </div>
+
+        <div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Logo-utez.png"
+                 alt="Logo UTEZ"
+                 class="app-logo">
+        </div>
+
+        <div class="module-title">
+            Menú Principal
+        </div>
+        <div class="list-group">
+            <a href="dashboard.html" class="list-group-item list-group-item-action">
+                <i class="bi bi-calendar-range me-2"></i>Periodos
+            </a>
+            <a href="gestion-puntos-evaluacion.html" class="list-group-item list-group-item-action">
+                <i class="bi bi-clipboard-data me-2"></i>Puntos de Evaluación
+            </a>
+            <a href="docentes.html" class="list-group-item list-group-item-action active">
+                <i class="bi bi-people me-2"></i>Evaluadores
+            </a>
+            <a href="configuracion.html" class="list-group-item list-group-item-action">
+                <i class="bi bi-gear me-2"></i>Configuración
+            </a>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand navbar-light">
+        <div class="container-fluid">
+            <span class="navbar-brand fw-bold">Sistema de Evaluación Docente</span>
+            <div class="d-flex align-items-center ms-auto">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle me-2"></i>Perfil Usuario
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="index.html"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="mb-4">
+                    <h2>Gestión de Evaluadores - Presencia ante Grupo</h2>
+                    <p class="text-muted">Administración de usuarios evaluadores para el punto: <strong>Presencia ante Grupo</strong>.</p>
+                </div>
+
+                <div class="card shadow">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5>Lista de Evaluadores - Presencia ante Grupo</h5>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoEvaluadorModal">
+                            <i class="bi bi-plus-lg"></i> Nuevo Evaluador
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>División Académica</th>
+                                        <th>Usuario</th>
+                                        <th>Contraseña</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>DATID</td>
+                                        <td>evaluador.datid.presencia</td>
+                                        <td><span class="text-muted">••••••••</span> <a href="#" class="ms-2"><i class="bi bi-eye-fill"></i></a></td>
+                                        <td>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input form-check-input-switch" type="checkbox" id="switch-evaluador-1" checked>
+                                                <label class="form-check-label" for="switch-evaluador-1"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editarEvaluadorModal"><i class="bi bi-pencil"></i> Editar</button>
+                                            <button class="btn btn-sm btn-outline-info ms-1" data-bs-toggle="modal" data-bs-target="#compartirAccesoModal-1"><i class="bi bi-envelope-fill"></i> Compartir</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>DAMI</td>
+                                        <td>evaluador.dami.presencia</td>
+                                        <td><span class="text-muted">••••••••</span> <a href="#" class="ms-2"><i class="bi bi-eye-fill"></i></a></td>
+                                        <td>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input form-check-input-switch" type="checkbox" id="switch-evaluador-2" checked>
+                                                <label class="form-check-label" for="switch-evaluador-2"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editarEvaluadorModal"><i class="bi bi-pencil"></i> Editar</button>
+                                            <button class="btn btn-sm btn-outline-info ms-1" data-bs-toggle="modal" data-bs-target="#compartirAccesoModal-2"><i class="bi bi-envelope-fill"></i> Compartir</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>DACEA</td>
+                                        <td>evaluador.dacea.presencia</td>
+                                        <td><span class="text-muted">••••••••</span> <a href="#" class="ms-2"><i class="bi bi-eye-fill"></i></a></td>
+                                        <td>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input form-check-input-switch" type="checkbox" id="switch-evaluador-3">
+                                                <label class="form-check-label" for="switch-evaluador-3"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editarEvaluadorModal"><i class="bi bi-pencil"></i> Editar</button>
+                                            <button class="btn btn-sm btn-outline-info ms-1" data-bs-toggle="modal" data-bs-target="#compartirAccesoModal-3"><i class="bi bi-envelope-fill"></i> Compartir</button>
+                                        </td>
+                                    </tr>
+                                    <!-- ... (Aquí irían solo los evaluadores para "Presencia ante Grupo" por cada división) ... -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal Editar Evaluador -->
+     <div class="modal fade" id="editarEvaluadorModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Evaluador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="usuarioEvaluador" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" id="usuarioEvaluador" value="evaluador.ejemplo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordEvaluador" class="form-label">Nueva Contraseña</label>
+                            <input type="password" class="form-control" id="passwordEvaluador">
+                            <small class="text-muted">Dejar en blanco para no cambiar la contraseña.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal Compartir Acceso -->
+     <div class="modal fade" id="compartirAccesoModal-1" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Compartir Acceso al Evaluador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <p>Ingrese el correo electrónico al que desea enviar la información de acceso del evaluador:</p>
+                        <div class="mb-3">
+                            <label for="emailDestino" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="emailDestino" required>
+                        </div>
+                        <p class="mb-0"><strong>Usuario:</strong> evaluador.datid.presencia</p>
+                        <p class="mb-0"><strong>Contraseña:</strong> <span class="text-muted">••••••••</span> <a href="#"><i class="bi bi-eye-fill"></i></a></p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary"><i class="bi bi-envelope-fill me-2"></i> Enviar Correo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Repetir el modal "Compartir Acceso" para cada evaluador de "Presencia ante Grupo", modificando el ID (compartirAccesoModal-2, compartirAccesoModal-3, etc.) y el contenido (usuario específico) -->
+     <div class="modal fade" id="compartirAccesoModal-2" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Compartir Acceso al Evaluador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <p>Ingrese el correo electrónico al que desea enviar la información de acceso del evaluador:</p>
+                        <div class="mb-3">
+                            <label for="emailDestino" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="emailDestino" required>
+                        </div>
+                        <p class="mb-0"><strong>Usuario:</strong> evaluador.dami.presencia</p>
+                        <p class="mb-0"><strong>Contraseña:</strong> <span class="text-muted">••••••••</span> <a href="#"><i class="bi bi-eye-fill"></i></a></p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary"><i class="bi bi-envelope-fill me-2"></i> Enviar Correo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="compartirAccesoModal-3" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Compartir Acceso al Evaluador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <p>Ingrese el correo electrónico al que desea enviar la información de acceso del evaluador:</p>
+                        <div class="mb-3">
+                            <label for="emailDestino" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="emailDestino" required>
+                        </div>
+                        <p class="mb-0"><strong>Usuario:</strong> evaluador.dacea.presencia</p> <!-- Usuario específico -->
+                        <p class="mb-0"><strong>Contraseña:</strong> <span class="text-muted">••••••••</span> <a href="#"><i class="bi bi-eye-fill"></i></a></p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary"><i class="bi bi-envelope-fill me-2"></i> Enviar Correo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Nuevo Evaluador -->
+    <div class="modal fade" id="nuevoEvaluadorModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nuevo Evaluador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="divisionAcademica" class="form-label">División Académica</label>
+                            <select class="form-select" id="divisionAcademica" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="DATID">DATID</option>
+                                <option value="DAMI">DAMI</option>
+                                <option value="DACEA">DACEA</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="usuarioEvaluadorNuevo" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" id="usuarioEvaluadorNuevo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordEvaluadorNuevo" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="passwordEvaluadorNuevo" required>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input form-check-input-switch" type="checkbox" id="estadoEvaluadorNuevo" checked>
+                                <label class="form-check-label" for="estadoEvaluadorNuevo">Estado</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Guardar Evaluador</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript para el estado activo del sidebar
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarLinks = document.querySelectorAll('#sidebar .list-group-item');
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
